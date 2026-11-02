@@ -252,3 +252,13 @@ footer>a{margin-left:auto}
 .story-replay:disabled{cursor:default;opacity:.45}
 .story-run .story-replay{visibility:hidden}
 @media(max-width:700px){.story-replay{right:0;bottom:0}}
+
+/* First visit: one centered invitation, then the existing sound-led story. */
+.entry-gate{display:none}
+html.entry-pending,html.entry-pending body{overflow:hidden}
+.entry-pending body>*:not(.entry-gate){visibility:hidden}
+.entry-pending .entry-gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#fff;padding:24px}
+.entry-gate button{border:1px solid #171717;border-radius:0;background:#fff;color:#171717;padding:14px 24px;min-height:54px;font-size:16px;font-weight:500;line-height:1.5;white-space:nowrap}
+.entry-gate button:hover{background:#f7f7f7}
+.entry-gate button:focus-visible{outline:2px solid #171717;outline-offset:6px}
+.entry-gate button:disabled{cursor:wait}

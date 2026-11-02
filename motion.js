@@ -142,5 +142,30 @@ const tk=document.querySelector('.ticker');if(tk&&'IntersectionObserver' in wind
 toggle.addEventListener('click',()=>{motion=!motion;document.body.classList.toggle('motion-paused',!motion);toggle.setAttribute('aria-pressed',String(motion));toggle.textContent='動態效果：'+(motion?'開啟':'關閉');if(!motion&&run)finish('已關閉動態效果。');});
 replay=document.createElement('button');replay.type='button';replay.className='story-replay';replay.textContent='↻ 重播有聲開場';replay.setAttribute('aria-label','重播有聲開場');replay.dataset.audioState='idle';replay.hidden=!motion||lowEnd;replay.addEventListener('click',replayWithSound);document.querySelector('.hero-art').append(replay);
 toggle.addEventListener('click',()=>{replay.hidden=!motion||lowEnd;});
-if(html.classList.contains('story-intro'))start();
+const gate=document.querySelector('#entry-gate'),enter=document.querySelector('#enter-puru');
+const locked=[...document.querySelectorAll('header,main,footer')];
+function openSite(){html.classList.remove('entry-pending');locked.forEach(el=>el.inert=false);if(gate)gate.remove();}
+async function enterSite(){
+ if(enter.disabled)return;
+ enter.disabled=true;enter.setAttribute('aria-busy','true');
+ try{
+  if(motion&&!lowEnd&&hero.animate){
+   ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+   const reflect=()=>{enter.dataset.audioState=ac.state;if(replay)replay.dataset.audioState=ac.state;};
+   ac.addEventListener('statechange',reflect);
+   const unlocked=ac.resume();
+   reflect();
+   await Promise.race([unlocked,new Promise(resolve=>setTimeout(resolve,1500))]);
+   reflect();
+   await Promise.race([sfxStart(),new Promise(resolve=>setTimeout(resolve,2500))]);
+  }
+ }catch{}
+ openSite();
+ if(motion&&!lowEnd&&hero.animate)start();else settle();
+}
+if(gate&&enter&&html.classList.contains('entry-pending')){
+ locked.forEach(el=>el.inert=true);
+ enter.addEventListener('click',enterSite);
+ html.dataset.entryReady='true';
+}else if(gate)gate.remove();
 })();
