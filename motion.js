@@ -2,7 +2,7 @@
    The page's own hero elements are the final frame, so the hand-off needs no swap and no video. */
 (()=>{
 const html=document.documentElement,hero=document.querySelector('.hero'),oct=document.querySelector('#mascot');
-let run=null,ac=null;
+let run=null,ac=null,replay=null;
 /* the proud face lives on the page: eyes, thick red lips and a glint sit on a wrapper that bobs with the sprite, so it stays registered with the artwork */
 const art=oct.querySelector('picture')||oct.querySelector('img'),face=document.createElement('span');face.className='face';oct.insertBefore(face,art);face.append(art);
 const prof=document.createElement('div');prof.className='proud';prof.setAttribute('aria-hidden','true');
@@ -32,6 +32,21 @@ async function sfxStart(){
   playCues();
  }catch{}
 }
+async function replayWithSound(){
+ if(run||!motion)return;
+ replay.disabled=true;
+ try{
+  ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+  const reflect=()=>replay.dataset.audioState=ac.state;
+  if(!replay.dataset.audioObserved){ac.addEventListener('statechange',reflect);replay.dataset.audioObserved='true';}
+  const unlocked=ac.resume();
+  reflect();
+  await unlocked;
+  reflect();
+  if(ac.state!=='running'){replay.disabled=false;return;}
+  await start();
+ }catch{replay.disabled=false;}
+}
 const T=6800,$$=s=>hero.querySelector(s);
 const TEXTS=['新訊息 12','15:00 會議','待辦 × 9','請盡快回覆','Inbox 99+','Re: Re: Fwd:','更新提醒','尚未讀取','審核中'];
 const T3=(x,y,r=0,sx=1,sy=1)=>`translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
@@ -42,6 +57,7 @@ function finish(msg){
  html.classList.remove('story-intro','story-run');
  run.anims.forEach(a=>{try{a.cancel()}catch{}});
  settle();(run.pks||[]).forEach(e=>e.remove());run.layer.remove();run=null;
+ if(replay)replay.disabled=false;
  if(msg&&run0&&run0.srcs)run0.srcs.forEach(s=>{try{s.stop()}catch{}});
 }
 async function start(){
@@ -101,7 +117,7 @@ async function start(){
   run.t0=performance.now();
   sfxStart();
   run.timer=setTimeout(()=>finish(),T-80);
- }catch{settle();html.classList.remove('story-intro','story-run');if(run){run.anims.forEach(a=>{try{a.cancel()}catch{}});run.layer.remove();run=null;}}
+ }catch{settle();html.classList.remove('story-intro','story-run');if(run){run.anims.forEach(a=>{try{a.cancel()}catch{}});run.layer.remove();run=null;}if(replay)replay.disabled=false;}
 }
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&run)finish('播放已停止，可隨時重播。');});
 addEventListener('resize',()=>{if(run&&innerWidth!==run.width)finish();});
@@ -124,5 +140,7 @@ setTimeout(()=>{if(!fired)rvEls.forEach(el=>el.classList.add('in'));},2500);
 }
 const tk=document.querySelector('.ticker');if(tk&&'IntersectionObserver' in window)new IntersectionObserver(es=>tk.classList.toggle('off',!es[0].isIntersecting)).observe(tk);
 toggle.addEventListener('click',()=>{motion=!motion;document.body.classList.toggle('motion-paused',!motion);toggle.setAttribute('aria-pressed',String(motion));toggle.textContent='動態效果：'+(motion?'開啟':'關閉');if(!motion&&run)finish('已關閉動態效果。');});
+replay=document.createElement('button');replay.type='button';replay.className='story-replay';replay.textContent='↻ 重播有聲開場';replay.setAttribute('aria-label','重播有聲開場');replay.dataset.audioState='idle';replay.hidden=!motion||lowEnd;replay.addEventListener('click',replayWithSound);document.querySelector('.hero-art').append(replay);
+toggle.addEventListener('click',()=>{replay.hidden=!motion||lowEnd;});
 if(html.classList.contains('story-intro'))start();
 })();
