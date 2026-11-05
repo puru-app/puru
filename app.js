@@ -15,7 +15,7 @@ let talkRefined=false;document.querySelector('#talk-demo').addEventListener('cli
 
 
 (function(){
-const RELEASE={CUT:{ver:'0.9.4',setup:'https://github.com/takhsu/puru/releases/download/v0.9.4/puru-CUT-0.9.4-setup-x64.exe',portable:'https://github.com/takhsu/puru/releases/download/v0.9.4/puru-CUT-0.9.4-portable-x64.zip'},TALK:{ver:'0.4.0',setup:'https://github.com/takhsu/puru-talk/releases/download/v0.4.0/puru-TALK-0.4.0-setup-x64.exe',portable:'https://github.com/takhsu/puru-talk/releases/download/v0.4.0/puru-TALK-0.4.0-app-win-x64.zip'}};
+const RELEASE={CUT:{ver:'0.9.7',setup:'https://github.com/takhsu/puru/releases/download/v0.9.7/puru-CUT-0.9.7-setup-x64.exe',portable:'https://github.com/takhsu/puru/releases/download/v0.9.7/puru-CUT-0.9.7-portable-x64.zip'},TALK:{ver:'0.4.0',setup:'https://github.com/takhsu/puru-talk/releases/download/v0.4.0/puru-TALK-0.4.0-setup-x64.exe',portable:'https://github.com/takhsu/puru-talk/releases/download/v0.4.0/puru-TALK-0.4.0-app-win-x64.zip'}};
 const menus=document.querySelectorAll('.dl-menu');
 function closeAll(except){menus.forEach(function(m){if(m!==except){m.classList.remove('open');m.querySelector('button').setAttribute('aria-expanded','false')}})}
 menus.forEach(function(m){const r=RELEASE[m.dataset.dl];if(!r)return;
