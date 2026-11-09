@@ -262,3 +262,20 @@ html.entry-pending,html.entry-pending body{overflow:hidden}
 .entry-gate button:hover{background:#f7f7f7}
 .entry-gate button:focus-visible{outline:2px solid #171717;outline-offset:6px}
 .entry-gate button:disabled{cursor:wait}
+
+.talk-mini-art{margin:22px 0;max-width:300px}.talk-mini-art img{width:100%;height:auto}.talk-mini-art figcaption{font-size:14px;color:#595959}
+
+/* Crop stray capture border without changing the original screenshot. */
+#talk .product-evidence img[src*="talk-v050"]{clip-path:inset(2px round 7px)}
+
+.talk-install-info{margin-top:24px;border-top:1px solid #999;border-bottom:1px solid #999;max-width:560px}.talk-install-info summary{display:flex;align-items:center;gap:12px;min-height:56px;cursor:pointer;list-style:none;font-weight:700}.talk-install-info summary::-webkit-details-marker{display:none}.talk-install-info summary::after{content:'＋';margin-left:auto;font-size:22px}.talk-install-info[open] summary::after{content:'−'}.talk-info-hint{font-size:14px;font-weight:400;color:#a10b10}.talk-info-body{padding:0 0 20px;font-size:15px;line-height:1.8}.talk-info-body p{margin:14px 0}.talk-info-body a{text-decoration:underline;text-underline-offset:4px}.talk-install-info summary:focus-visible{outline:3px solid #d41116;outline-offset:3px}
+
+/* Shared hierarchy for notes and expandable information. */
+.product-evidence figcaption,.case-note,.spec-accordion small{font-size:13px;line-height:1.6;color:#767676}.talk-install-info summary{color:var(--red)}.talk-info-hint{color:var(--red);font-size:13px}.talk-media{position:relative}.talk-media .talk-mini-art{position:absolute;right:2%;bottom:44px;width:26%;max-width:200px;margin:0;pointer-events:none}.spec-accordion{border-top:1px solid #bcbcbc}.spec-accordion details{border-bottom:1px solid #bcbcbc}.spec-accordion summary{list-style:none;display:flex;align-items:center;gap:20px;padding:18px 0;min-height:56px;color:var(--red);font-weight:700;cursor:pointer}.spec-accordion summary::-webkit-details-marker{display:none}.spec-accordion summary::after{content:'＋';margin-left:auto;font-size:22px}.spec-accordion details[open] summary::after{content:'−'}.spec-answer{padding:0 0 20px;line-height:1.8}.spec-accordion summary:focus-visible{outline:3px solid var(--red);outline-offset:3px}@media(max-width:700px){.talk-media .talk-mini-art{width:29%;bottom:45px;right:2%}.product-evidence figcaption,.case-note,.spec-accordion small{font-size:13px}}
+
+.ticker .ticker-set{font-size:9.8px}
+
+.install-overview{border-top:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc}.install-overview>summary{list-style:none;display:flex;align-items:center;min-height:58px;color:var(--red);font-weight:700;cursor:pointer}.install-overview>summary::-webkit-details-marker{display:none}.install-overview>summary::after{content:'＋';margin-left:auto;font-size:22px}.install-overview[open]>summary::after{content:'−'}.install-overview>summary:focus-visible{outline:3px solid var(--red);outline-offset:3px}.install-table{margin:0}.install-table>div{display:grid;grid-template-columns:minmax(110px,24%) 1fr;gap:20px;padding:18px 0;border-top:1px solid #ddd}.install-table dt{font-weight:700}.install-table dd{margin:0;line-height:1.8}.install-table small{font-size:13px;color:#767676}@media(max-width:700px){.install-table>div{grid-template-columns:1fr;gap:4px}}
+
+/* Quiet dividers between the family and product sections. */
+#cut, #talk{border-top:1px solid #c5c5c5}
