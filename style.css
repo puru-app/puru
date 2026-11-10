@@ -127,6 +127,7 @@ h2{font-size:4.2vw}h2{font-size:clamp(34px,4.2vw,64px)}
 .proud.on{opacity:1}
 @keyframes glint{0%,100%{opacity:.75;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
 .proud.on .gh{animation:glint 2.6s ease-in-out infinite}
+.mascot-button.ambient-off .face,.mascot-button.ambient-off .gh,.verb-grid.ambient-off i{animation-play-state:paused}
 /* the four verb icons bob up and down all the time, each on its own beat */
 @keyframes icon-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .verb-grid.reveal-arrive i{animation:tool-flow 3.2s ease both,icon-float 3.4s ease-in-out 3.2s infinite}
