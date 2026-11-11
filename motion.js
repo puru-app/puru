@@ -57,7 +57,8 @@ async function replayWithSound(){
   await start();
  }catch{replay.disabled=false;}
 }
-const T=6800,$$=s=>hero.querySelector(s);
+const T=6800,RV=5550,$$=s=>hero.querySelector(s);
+const mobileStory=matchMedia('(max-width:700px)');
 const TEXTS=['新訊息 12','15:00 會議','待辦 × 9','請盡快回覆','Inbox 99+','Re: Re: Fwd:','更新提醒','尚未讀取','審核中'];
 const T3=(x,y,r=0,sx=1,sy=1)=>`translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
 function finish(msg){
@@ -75,16 +76,30 @@ async function start(previous=null){
  if(!motion||!hero.animate){html.classList.remove('story-intro');settle();return;}
  run={prof,cues:previous?previous.cues:[],srcs:previous?previous.srcs:[],t0:previous?previous.t0:performance.now(),anims:[],layer:document.createElement('div'),timer:0,width:innerWidth,height:innerHeight};
  try{
-  if(!previous)window.scrollTo({top:0,behavior:'auto'});
-  html.classList.add('story-ran','story-intro','story-run');
   const img=oct.querySelector('img');
   if(!previous&&img&&img.decode)await Promise.race([img.decode().catch(()=>{}),new Promise(r=>setTimeout(r,1500))]);
   if(!run)return;
+  if(!previous)window.scrollTo({top:0,behavior:'instant'});
+  html.classList.add('story-ran','story-intro','story-run');
   const layer=run.layer;layer.className='story-layer';hero.append(layer);
   const skip=document.createElement('button');skip.className='story-skip';skip.textContent='略過 ↓';skip.setAttribute('aria-label','略過開場動畫');skip.addEventListener('click',()=>finish('已略過開場。'));layer.append(skip);
   const L=layer.getBoundingClientRect();
   const rel=el=>{const r=el.getBoundingClientRect();return{x:r.left-L.left,y:r.top-L.top,w:r.width,h:r.height,cx:r.left-L.left+r.width/2,cy:r.top-L.top+r.height/2};};
   const A=(el,fr,o)=>{const a=el.animate(fr,o);run.anims.push(a);return a;};
+  if(mobileStory.matches){
+   const stageTop=skip.getBoundingClientRect().bottom+8;
+   const stageHeight=Math.min(innerHeight,window.visualViewport?.height||innerHeight)-stageTop;
+   if(stageHeight<120){finish('可見空間不足，略過開場。');return;}
+   // Move the mascot into view without changing its final position in the layout.
+   const bounds=oct.getBoundingClientRect();
+   const scale=Math.min(.92,(stageHeight-12)/bounds.height);
+   const center=stageTop+Math.min(stageHeight,bounds.height+40)/2;
+   const shift=center-(bounds.top+bounds.height/2);
+   A($$('.hero-art'),[
+    {transform:T3(0,shift,0,scale,scale)},
+    {transform:'none'}
+   ],{delay:RV-160,duration:940,easing:'cubic-bezier(.45,0,.22,1)',fill:'both'});
+  }
   /* Fibonacci barrage: 1,2,3,5,8 objects fly straight left to right at the octopus, faster and tighter each wave (last wave = bullets); she catches each with an arm, then looks proud */
   const WAVES=[[1,600,520,0],[2,1550,440,240],[3,2400,360,160],[5,3100,280,100],[8,3700,190,45]];
   const KINDS=['win','text','alert','text','win','text','alert','text','text','win','alert','text','text','alert','text','win','text','alert','alert'];
@@ -125,7 +140,6 @@ async function start(previous=null){
   prof.querySelectorAll('.pk,.gl').forEach((el,i)=>A(el,[{transform:'scale(0) rotate(0deg)'},{transform:'scale(1.4) rotate(45deg)'},{transform:'scale(1) rotate(90deg)'}],{delay:P0+80+i*140,duration:320,easing:'ease-out',fill:'both'}));
   A(prof.querySelector('.mo'),[{transform:'scale(.4)'},{transform:'scale(1.22)'},{transform:'scale(.96)'},{transform:'scale(1)'}],{delay:P0,duration:360,easing:'ease-out',fill:'both'});
   const rv=(el,at,dur=520)=>A(el,[{opacity:0,transform:'translateY(18px) scale(.95)'},{opacity:1,transform:'none'}],{delay:at,duration:dur,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
-  const RV=5550;
   rv($$('.hero-red'),RV,300);A($$('.hero-red'),[{transform:'scale(1)'},{transform:'scale(1.7)'},{transform:'scale(1)'}],{delay:RV+300,duration:380,fill:'forwards'});
   rv($$('h1'),RV+100,640);rv($$('.brand-zh'),RV+250);rv($$('.intro'),RV+350);
   cue(4760,'brand',.9);
