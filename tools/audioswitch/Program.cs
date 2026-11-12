@@ -215,7 +215,7 @@ sealed class TrayContext : ApplicationContext
 /// <summary>關於：版本、版權聲明（© masamoon）、授權與原始碼連結。套 puru 系列亮色。</summary>
 sealed class AboutDialog : Form
 {
-    public const string RepoUrl = "https://github.com/takhsu/puru";
+    public const string RepoUrl = "https://github.com/puru-app/puru";
 
     public AboutDialog()
     {
@@ -263,7 +263,7 @@ sealed class AboutDialog : Form
         };
         var link = new LinkLabel
         {
-            Text = "原始碼與更新：github.com/takhsu/puru",
+            Text = "原始碼與更新：github.com/puru-app/puru",
             LinkColor = PanelForm.Ink,
             ActiveLinkColor = PanelForm.Red,
             VisitedLinkColor = PanelForm.Ink,

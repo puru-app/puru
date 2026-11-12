@@ -6,7 +6,7 @@
 
 ## 下載
 
-免安裝版在本倉庫的 [Releases](https://github.com/takhsu/puru/releases)（檔名 `AudioSwitch-<版本>-portable-x64.zip`）。解壓後執行 `AudioSwitch.exe` 即可，內含 .NET 執行環境。
+免安裝版在本倉庫的 [Releases](https://github.com/puru-app/puru/releases)（檔名 `AudioSwitch-<版本>-portable-x64.zip`）。解壓後執行 `AudioSwitch.exe` 即可，內含 .NET 執行環境。
 
 ## 使用
 
