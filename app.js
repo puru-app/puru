@@ -15,7 +15,7 @@ let talkRefined=false;document.querySelector('#talk-demo').addEventListener('cli
 
 
 (function(){
-const RELEASE={CUT:{ver:'0.9.10',setup:'https://github.com/puru-app/puru/releases/download/v0.9.10/puru-CUT-0.9.10-setup-x64.exe'},TALK:{ver:'0.6.3',setup:'https://github.com/puru-app/puru-talk/releases/download/v0.6.3/puru-TALK-0.6.3-setup-x64.exe'}};
+const RELEASE={CUT:{ver:'0.9.11',setup:'https://github.com/puru-app/puru/releases/download/v0.9.11/puru-CUT-0.9.11-setup-x64.exe'},TALK:{ver:'0.6.3',setup:'https://github.com/puru-app/puru-talk/releases/download/v0.6.3/puru-TALK-0.6.3-setup-x64.exe'}};
 const menus=document.querySelectorAll('.dl-menu');
 function closeAll(except){menus.forEach(function(m){if(m!==except){m.classList.remove('open');m.querySelector('button').setAttribute('aria-expanded','false')}})}
 menus.forEach(function(m){const r=RELEASE[m.dataset.dl];if(!r)return;
